@@ -1,0 +1,566 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-outfit: "Outfit", sans-serif;
+
+  --color-midnight: #110e1b;
+  --color-violet-900: #191528;
+  --color-violet-800: #3c162f;
+  --color-crimson: #5c162e;
+  --color-electric: #ff2b6d;
+  --color-amaranth: #7c162e;
+
+  --shadow-neon: 0 0 20px rgba(255, 43, 109, 0.6);
+  --shadow-depth: 0 20px 50px rgba(0, 0, 0, 0.8);
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@400;500;700&display=swap');
+
+@layer base {
+  * {
+    @apply cursor-none;
+  }
+
+  body {
+    background-color: #110e1b;
+    color: #ffffff;
+    font-family: "Outfit", sans-serif;
+    overflow-x: hidden;
+    min-height: 100vh;
+    user-select: none;
+  }
+
+  ::selection {
+    @apply bg-electric text-white;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-violet-800 rounded-full border-2 border-midnight;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-crimson;
+  }
+}
+
+@layer components {
+  .glass-card {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .btn-primary {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #ff2b6d, #5c162e);
+    padding: 0.75rem 2rem;
+    border-radius: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    box-shadow: 0 4px 15px rgba(255, 43, 109, 0.3);
+    transition: all 0.3s ease;
+  }
+  .btn-primary:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 20px rgba(255, 43, 109, 0.6);
+    scale: 1.05;
+  }
+
+  .btn-secondary {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0.75rem 2rem;
+    border-radius: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    backdrop-filter: blur(12px);
+    transition: all 0.3s ease;
+  }
+  .btn-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-4px);
+    border-color: rgba(255, 255, 255, 0.4);
+  }
+
+  .typing-cursor::after {
+    content: "|";
+    @apply animate-pulse text-electric;
+  }
+}
+
+@layer utilities {
+  .shine-effect::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transform: skewX(-20deg);
+    pointer-events: none;
+  }
+
+  .shine-effect:hover::before {
+    animation: shine-sweep 0.7s forwards;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* Hide Clerk Internal Branding - Aggressive */
+  .cl-internal-1k7jtru, 
+  .cl-internal-1dauvpw, 
+  .cl-internal-dt53uo, 
+  .cl-internal-1fpq5at,
+  .cl-userButtonPopoverFooter,
+  .cl-internal-13bw8y2,
+  .cl-internal-l2l775,
+  .cl-internal-1wqjyns,
+  .cl-internal-1m7j0tj,
+  .cl-internal-1bqud7j {
+    display: none !important;
+  }
+
+  /* Target everything inside Clerk with white color property as base */
+  .cl-rootBox *, .cl-userButtonPopoverCard *, .cl-userProfile-root * {
+    color: #ffffff;
+    --cl-icon-fill: #ffffff;
+  }
+
+  .cl-headerTitle, 
+  .cl-headerSubtitle, 
+  .cl-dividerText, 
+  .cl-footerActionText, 
+  .cl-identityPreviewText, 
+  .cl-userButtonPopoverActionButtonText,
+  .cl-formFieldLabel {
+    color: white !important;
+  }
+
+  .cl-headerSubtitle, .cl-dividerText, .cl-footerActionText {
+    opacity: 0.7;
+  }
+
+  /* Social Buttons Overhaul */
+  .cl-socialButtonsBlockButton,
+  .cl-socialButtonsIconButton {
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    transition: all 0.2s ease !important;
+    color: white !important;
+  }
+
+  .cl-socialButtonsBlockButton:hover,
+  .cl-socialButtonsIconButton:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    border-color: #ff2b6d !important;
+    transform: translateY(-1px) !important;
+  }
+
+  /* Force X/Twitter and Apple to White - Global Filter */
+  .cl-social-icon, 
+  [class*="cl-socialButtonsBlockButtonIcon"],
+  [class*="cl-socialButtonsBlockButton"] img, 
+  [class*="cl-socialButtonsBlockButton"] svg,
+  /* Target Clerk's specific SVG containers */
+  .cl-socialButtonsBlockButton__apple,
+  .cl-socialButtonsBlockButton__twitter,
+  .cl-socialButtonsBlockButton__x {
+    filter: brightness(0) invert(1) !important;
+    -webkit-filter: brightness(0) invert(1) !important;
+    --cl-icon-fill: #ffffff !important;
+  }
+
+  /* Form Elements - Fixed Placeholder visibility */
+  .cl-formFieldLabel {
+    color: rgba(255, 255, 255, 0.8) !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    font-size: 10px !important;
+    letter-spacing: 1px !important;
+    margin-bottom: 4px !important;
+  }
+
+  .cl-formFieldInput {
+    background-color: #191528 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: white !important;
+    border-radius: 0.75rem !important;
+    padding: 0.85rem 1rem !important;
+    height: 3rem !important;
+    font-size: 14px !important;
+  }
+
+  .cl-formFieldInput::placeholder {
+    color: rgba(255, 255, 255, 0.3) !important;
+  }
+
+  .cl-formFieldInput:focus {
+    border-color: #ff2b6d !important;
+    box-shadow: 0 0 15px rgba(255, 43, 109, 0.3) !important;
+    outline: none !important;
+  }
+
+  .cl-formFieldInputShowPasswordIcon {
+    color: white !important;
+    opacity: 0.7 !important;
+    --cl-icon-fill: #ffffff !important;
+    width: 1rem !important;
+    height: 1rem !important;
+  }
+
+  .cl-formFieldInputShowPasswordButton {
+    color: white !important;
+    right: 0.75rem !important;
+  }
+
+  /* Specific fix for images in social buttons */
+  .cl-socialButtonsBlockButton img, 
+  .cl-socialButtonsIconButton img {
+    margin-right: 0.75rem !important;
+    width: 1.25rem !important;
+    height: 1.25rem !important;
+  }
+
+  /* Footer Actions ("Don't have an account?") */
+  .cl-footerActionLink {
+    color: #ff2b6d !important;
+    font-weight: 800 !important;
+    text-decoration: none !important;
+    transition: all 0.2s ease !important;
+  }
+
+  .cl-footerActionLink:hover {
+    color: white !important;
+    text-decoration: underline !important;
+  }
+
+  /* Validation & Error Messages Visibility */
+  .cl-formFieldErrorText, 
+  .cl-formFieldErrorIcon,
+  .cl-alertText[data-danger="true"],
+  .cl-alertIcon[data-danger="true"] {
+    color: #ff4d4d !important; /* Brighter red for visibility */
+    opacity: 1 !important;
+  }
+
+  .cl-formFieldWarningText,
+  .cl-alertText[data-warning="true"],
+  .cl-alertIcon[data-warning="true"] {
+    color: #ffd700 !important; /* Bright Gold/Yellow */
+    opacity: 1 !important;
+  }
+
+  .cl-formFieldSuccessText,
+  .cl-alertText[data-success="true"],
+  .cl-alertIcon[data-success="true"] {
+    color: #00ff7f !important; /* Spring Green */
+    opacity: 1 !important;
+  }
+
+  .cl-formFieldHintText {
+    color: rgba(255, 255, 255, 0.5) !important;
+    font-size: 11px !important;
+  }
+
+  .cl-alert {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+
+  /* Password Strength Indicators icons */
+  .cl-formFieldInputShowPasswordIcon,
+  [class*="cl-formFieldCheckIcon"] {
+    --cl-icon-fill: currentColor !important;
+    fill: currentColor !important;
+  }
+}
+
+@keyframes shine-sweep {
+  0% { left: -100%; }
+  100% { left: 200%; }
+}
+
+/* nexplay loader */
+.nexplay-loader {
+  text-align: center;
+  transform: scale(0.25);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+@media (min-width: 640px) {
+  .nexplay-loader {
+    transform: scale(0.5);
+  }
+}
+@media (min-width: 1024px) {
+  .nexplay-loader {
+    transform: scale(0.8);
+  }
+}
+
+.nexplay-loader span {
+  display: inline-block;
+  margin-left: -15px;
+  font-size: 200px;
+  line-height: 200px;
+  font-family: "Oswald", sans-serif;
+  font-weight: 700;
+  position: relative;
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;  
+  animation: nexplay-slide 2s linear infinite;
+  background-size: auto 400px;
+  background-position: left 0px; 
+  background-image: linear-gradient(to bottom,    
+    rgb(102, 35, 69) 0px, rgb(102, 35, 69) 100px,
+    black 100px,
+    rgb(102, 21, 16) 102px, rgb(102, 21, 16) 130px,   
+    black 130px,
+    rgb(39, 110, 151) 132px, rgb(39, 110, 151) 180px,
+    black 180px,
+    rgb(175, 133, 45) 182px, rgb(175, 133, 45) 200px,   
+    black 200px,
+    rgb(102, 35, 69) 202px, rgb(102, 35, 69) 240px,   
+    black 240px,
+    rgb(102, 21, 16) 242px, rgb(102, 21, 16) 300px,  
+    black 300px,
+    rgb(39, 110, 151) 302px, rgb(39, 110, 151) 350px,  
+    black 350px,
+    rgb(175, 133, 45) 352px, rgb(175, 133, 45) 398px,
+    black 399px, black 400px
+  );
+}
+
+.nexplay-loader span:nth-child(odd) {
+  top: 30px;
+  background-image: linear-gradient(to bottom,     
+    rgb(102, 35, 69) 0px, rgb(102, 35, 69) 70px,
+    black 70px,
+    rgb(102, 21, 16) 72px, rgb(102, 21, 16) 100px,   
+    black 100px,
+    rgb(39, 110, 151) 102px, rgb(39, 110, 151) 150px,
+    black 150px,
+    rgb(175, 133, 45) 152px, rgb(175, 133, 45) 170px,   
+    black 170px,
+    rgb(102, 35, 69) 172px, rgb(102, 35, 69) 210px,   
+    black 210px,
+    rgb(102, 21, 16) 212px, rgb(102, 21, 16) 270px,  
+    black 270px,
+    rgb(39, 110, 151) 272px, rgb(39, 110, 151) 320px,  
+    black 320px,
+    rgb(175, 133, 45) 322px, rgb(175, 133, 45) 370px
+  );
+}
+
+@keyframes nexplay-slide {
+  100% {
+    background-position: left -400px;    
+  }  
+}
+
+/* Custom Footer Styles */
+:root {
+  --footer-m: 4rem;
+}
+
+@media screen and (max-width: 1000px) {
+  :root {
+    --footer-m: 3rem;
+  }
+}
+
+.custom-footer-card {
+  height: auto;
+  width: fit-content;
+  max-width: 90%;
+  background: linear-gradient(135deg, #ff2b6d, #5c162e);
+  color: white;
+  border-radius: 20px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 3rem;
+  margin: 0 auto calc(2 * var(--footer-m));
+  padding: 1.5rem 3rem;
+  text-align: left;
+  box-shadow: 0 10px 40px rgba(255, 43, 109, 0.3);
+}
+
+.custom-footer-card h2 {
+  font-weight: 800;
+  text-align: left;
+  font-size: 2rem;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.custom-footer-card form {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.custom-footer-card input {
+  flex: 1;
+  padding: 12px 20px;
+  border-radius: 25px;
+  border: 2px solid #110e1b;
+  background-color: white;
+  outline: none;
+  font-family: inherit;
+  color: #110e1b;
+  font-weight: 600;
+}
+
+.custom-footer-card input::placeholder {
+  color: #666;
+}
+
+.custom-footer-card button {
+  background-color: #110e1b;
+  font-size: calc(0.3 * var(--footer-m));
+  border: 2px solid #110e1b;
+  color: white;
+  font-weight: 700;
+  padding: 12px 30px;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+@media screen and (max-width: 768px) {
+  .custom-footer-card {
+    flex-direction: column;
+    padding: 2rem;
+    text-align: center;
+  }
+  
+  .custom-footer-card h2 {
+    text-align: center;
+    font-size: calc(0.8 * var(--footer-m));
+  }
+  
+  .custom-footer-card form {
+    flex-direction: column;
+    max-width: 100%;
+  }
+  
+  .custom-footer-card button {
+    width: 100%;
+  }
+}
+.custom-footer-card button:hover {
+  background-color: #222;
+  transform: scale(1.05);
+}
+
+.custom-footer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  padding: 5rem 2vw;
+  position: relative;
+  background-color: #110e1b;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.custom-footer .col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: calc(0.3 * var(--footer-m)) calc(0.8 * var(--footer-m));
+  width: 28%;
+  gap: 10px;
+}
+
+.custom-footer .col h3 {
+  font-weight: 800;
+  font-size: calc(0.6 * var(--footer-m));
+  margin: 0;
+  color: white;
+}
+
+.custom-footer .col p {
+  color: #d5d5d5;
+  font-size: calc(0.25 * var(--footer-m));
+  margin: 0;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+.custom-footer .col2 p:hover, .custom-footer .col3 p:hover {
+  color: #ff2b6d;
+}
+
+.custom-footer .col2,
+.custom-footer .col3 {
+  background-color: #191528;
+  border-radius: calc(0.3 * var(--footer-m));
+  align-items: center;
+  text-align: center;
+  gap: 1.5rem;
+  padding-top: calc(0.8 * var(--footer-m));
+  padding-bottom: calc(0.8 * var(--footer-m));
+}
+
+.custom-footer .social {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.custom-footer .link {
+  width: calc(0.8 * var(--footer-m));
+  height: calc(0.8 * var(--footer-m));
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: calc(0.2 * var(--footer-m));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s;
+}
+.custom-footer .link:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.custom-footer .link img {
+  height: calc(0.3 * var(--footer-m));
+  object-fit: cover;
+  filter: brightness(0) invert(1);
+}
+
+@media screen and (max-width: 768px) {
+  .custom-footer {
+    flex-direction: column;
+    padding: 3rem 5vw;
+    gap: 2rem;
+  }
+  .custom-footer .col {
+    width: 100%;
+    padding: 1.5rem;
+  }
+}

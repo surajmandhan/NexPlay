@@ -1,0 +1,6 @@
+{
+  "name": "nexplay",
+  "description": "A cinematic movie theater experience in your browser, powered by TMDb metadata and immersive 3D interactions.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}
